@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <label for="username">Username</label>
+    <input type="text" name="username" id="username">
+    <label for="email">Email</label>
+    <input type="text" name="email" id="email">
+    <label for="password">password</label>
+    <input type="password" name="password" id="password">
+    <button id="submitBtn">Submit</button>
+    <button id="logOut">Logout</button>
+
+    <h2>Login</h2>
+    <button id="login">Login</button>
+    <script>
+        const logInBtn = document.querySelector('#login')
+        logInBtn.addEventListener('click', login)
+        const logOutBtn = document.querySelector('#logOut')
+        logOutBtn.addEventListener('click', logOut)
+        const submitBtn = document.querySelector('#submitBtn')
+        submitBtn.addEventListener('click',registerUser)
+        async function registerUser () {
+            const un = document.querySelector('#username').value
+            const email = document.querySelector('#email').value
+            const password = document.querySelector('#password').value
+            const userData = {
+                username: un,
+                email: email,
+                password: password
+            }
+        const req = await fetch('/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+        })
+        if(req.status===200){
+            alert('Done')
+        }
+        }
+        async function logOut (){
+            const req = await fetch('/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'appplication/json'
+                }
+            })
+            if(req.status === 200){
+                alert('Did it')
+            }
+        }
+
+        async function login(){
+            const un = document.querySelector('#username').value
+            const email = document.querySelector('#email').value
+            const password = document.querySelector('#password').value
+            const userData = {
+                username: un,
+                password: password
+            }
+            const req = await fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userData)
+            })
+            if(req.status===200){
+                alert('Logged in')
+            }
+        }
+    </script>
+</body>
+</html>
